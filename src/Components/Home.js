@@ -4,14 +4,19 @@ import { Add } from './Add';
 import Search from './Search';
 import DocList from './DocList';
 
-const data = [
-  { id: 1, name: 'Thanh tra', isComplete: true },
-  { id: 2, name: 'Quay Phim', isComplete: false },
-];
+// const data = [
+//   { id: 1, name: 'Thanh tra', isComplete: true },
+//   { id: 2, name: 'Quay Phim', isComplete: false },
+// ];
 class Home extends React.Component {
   state = {
-    data: data,
+    data: [],
   };
+  componentDidMount(){
+    fetch('http://localhost:3001/')
+      .then(response => response.json())
+      .then(data => this.setState({ data }));
+  }
   setCompleted = (id) => {
     var doc = this.state.data.find((doc) => doc.id === id);
     var docList = this.state.data.filter((doc) => doc.id !== id);
@@ -45,6 +50,7 @@ class Home extends React.Component {
   };
 
   render() {
+    console.log("dataa",this.state.data)
     const docList = this.state.data.filter((i) => !i.isComplete);
     const docListComplete = this.state.data.filter((doc) => doc.isComplete);
     return (
